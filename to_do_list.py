@@ -22,14 +22,17 @@ def view_todo_list():
         elif view == 'y':
             print("\nTo do list:\n")
 
-            headers = reader.fieldnames
-            print(" | ".join(headers))
-            print("-" * 50)
-
-            with open('To do list.csv','r',newline = "") as file:
+            with open('To do list.csv', 'r', newline="") as file:
                 reader = csv.DictReader(file)
-                for index, row in enumerate(reader,start = 1):
-                    print(f'{index}. {row["Date"]}: {row["Task"]}, {row["Status"]}, {row["Priority"]}:')
+
+                headers = reader.fieldnames
+                print(" | ".join(headers))
+                print("-" * 50)
+
+                with open('To do list.csv','r',newline = "") as file:
+                    reader = csv.DictReader(file)
+                    for index, row in enumerate(reader,start = 1):
+                        print(f'{index}. {row["Date"]}: {row["Task"]}, {row["Status"]}, {row["Priority"]}:')
         break
 
 view_todo_list()
