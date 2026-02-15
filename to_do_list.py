@@ -21,10 +21,15 @@ def view_todo_list():
             break
         elif view == 'y':
             print("\nTo do list:\n")
+
+            headers = reader.fieldnames
+            print(" | ".join(headers))
+            print("-" * 50)
+
             with open('To do list.csv','r',newline = "") as file:
                 reader = csv.DictReader(file)
-                for row in reader:
-                    print(row)
+                for index, row in enumerate(reader,start = 1):
+                    print(f'{index}. {row["Date"]}: {row["Task"]}, {row["Status"]}, {row["Priority"]}:')
         break
 
 view_todo_list()
@@ -47,7 +52,7 @@ def add_tasks():
 
 add_tasks()
 
-print("CSV created successfully!")
+print("\n Task Added Successfully\n")
 
 
 
