@@ -46,7 +46,7 @@ def add_tasks():
     while True:
         task = input('Enter task(or "done to finish"): ')
         if task == 'done':
-            break
+            return
 
         date = input('Enter date(mm/dd/yyyy):')
         status = input('Enter status:')
@@ -54,6 +54,54 @@ def add_tasks():
 
         writer.writerow([date, task, status, priority])
 
+        print("\n Task Added Successfully\n")
+
 add_tasks()
 
-print("\n Task Added Successfully\n")
+
+
+def delete_task():
+
+    filename = 'To do list.csv'
+
+    with open(filename, 'r', newline="") as file:
+        reader = csv.DictReader(file)
+        tasks = list(reader)
+
+    if not tasks:
+        print("No tasks to delete.")
+        return
+    while True:
+        delete = input("Would you like to delete a task?(y/n): ").lower()
+
+        if delete != 'y':
+            return
+
+        print("\nTo do list:\n")
+        print(f"{'No.':<4} {'Task':<25} {'Status':<12} {'Priority':<10}")
+        print("-" * 60)
+        for index, task in enumerate(tasks, start=1):
+            print(f"{index:<4} {task['Task']:<25} {task['Status']:<12} {task['Priority']:<10}")
+
+        try:
+            choice = int(input("\nEnter task number to delete: "))
+
+            if 1 <= choice <= len(tasks):
+                deleted = tasks.pop(choice - 1)
+                print(f"Deleted: {deleted['Task']}")
+            else:
+                print("Invalid number.")
+                return
+
+        except ValueError:
+            print("Please enter a valid number.")
+            return
+
+        with open(filename, 'w', newline="") as file:
+            fieldnames = ['Date', 'Task', 'Status', 'Priority']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+            writer.writeheader()
+            writer.writerows(tasks)
+
+delete_task()
