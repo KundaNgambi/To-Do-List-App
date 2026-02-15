@@ -25,14 +25,15 @@ def view_todo_list():
             with open('To do list.csv', 'r', newline="") as file:
                 reader = csv.DictReader(file)
 
-                headers = reader.fieldnames
-                print(" | ".join(headers))
-                print("-" * 50)
+                print(f"{'No.':<4} {'Date':<12} {'Task':<25} {'Status':<12} {'Priority':<10}")
+                print("-" * 70)
 
-                with open('To do list.csv','r',newline = "") as file:
-                    reader = csv.DictReader(file)
-                    for index, row in enumerate(reader,start = 1):
-                        print(f'{index}. {row["Date"]}: {row["Task"]}, {row["Status"]}, {row["Priority"]}:')
+                for index, row in enumerate(reader, start=1):
+                    print(f"{index:<4} "
+                          f"{row['Date']:<12} "
+                          f"{row['Task']:<25} "
+                          f"{row['Status']:<12} "
+                          f"{row['Priority']:<10}")
         break
 
 view_todo_list()
@@ -56,14 +57,3 @@ def add_tasks():
 add_tasks()
 
 print("\n Task Added Successfully\n")
-
-
-
-def display_tasks():
-
-    with open('To do list.csv','r',newline = "") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            print(row)
-
-display_tasks()
